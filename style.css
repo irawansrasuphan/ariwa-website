@@ -72,6 +72,7 @@ body {
 
 .glass {
   background: var(--panel);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border: 1px solid var(--panel-border);
   border-radius: 16px;
@@ -139,6 +140,7 @@ body {
   padding: 22px 40px;
   z-index: 100;
   background: rgba(5, 8, 10, 0.04);
+  -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--panel-border);
   border-radius: 0;
@@ -1317,6 +1319,7 @@ body {
   .sns-slider {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
     scroll-snap-type: x proximity;
     scrollbar-width: none;
   }
