@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARIWA | Product Detail</title>
+    <meta name="description" content="Detailed specifications for ARIWA's broadcast and AI ecosystem products." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ARIWA | Product Detail" />
+    <meta property="og:description" content="Detailed specifications for ARIWA's broadcast and AI ecosystem products." />
+    <meta property="og:image" content="assets/ariwa.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="navbar glass">
+      <a href="index.html" class="logo"
+        ><img src="assets/ariwa.png" alt="ARIWA"
+      /></a>
+
+      <input type="checkbox" id="navToggle" class="nav-toggle" />
+      <label for="navToggle" class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html" class="active">Products</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section class="brand-detail">
+        <div class="brand-header glass">
+          <div class="brand-info">
+            <img id="brandLogo" class="brand-logo" src="" alt="" />
+
+            <p class="brand-desc" id="brandDesc"></p>
+          </div>
+
+          <div class="brand-action">
+            <button class="btn" id="topVisitBtn" style="display: none">
+              Visit Official Site
+            </button>
+          </div>
+        </div>
+
+        <div class="product-title" id="featuredTitle">
+          <h2>Featured Products</h2>
+        </div>
+        <div class="product-gallery" id="productGallery"></div>
+      </section>
+
+      <div class="detail-footer">
+        <a href="products.html" class="back-btn" id="backBtn">
+          <span class="arrow">←</span> Back to Products
+        </a>
+
+        <button class="btn" id="bottomVisitBtn" style="display: none">
+          Visit Official Site
+        </button>
+      </div>
+    </main>
+
+    <footer class="footer">© 2026 ARIWA</footer>
+
+    <script src="products.js"></script>
+
+    <script>
+      document.getElementById("backBtn").addEventListener("click", (e) => {
+        if (document.referrer && window.history.length > 1) {
+          e.preventDefault();
+          window.history.back();
+        }
+      });
+      window.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(window.location.search);
+        const name = params.get("name");
+
+        const product = products.find((p) => p.name === name);
+
+        if (!product) {
+          document.querySelector(".brand-detail").innerHTML = `
+            <div class="glass" style="padding:40px;text-align:center;">
+                <h2>Product not found</h2>
+            </div>
+        `;
+
+          return;
+        }
+        const noProducts = ["PTZOptics", "Telycam", "Isthari"];
+        if (noProducts.includes(product.name)) {
+          document.getElementById("featuredTitle").style.display = "none";
+        }
+        // Logo
+        document.getElementById("brandLogo").src = product.logo;
+        document.getElementById("brandLogo").alt = product.name;
+
+        // Description
+        document.getElementById("brandDesc").textContent = product.desc;
+        // Visit buttons
+        const topBtn = document.getElementById("topVisitBtn");
+        const bottomBtn = document.getElementById("bottomVisitBtn");
+
+        if (product.url) {
+          topBtn.style.display = "inline-block";
+
+          if (!noProducts.includes(product.name)) {
+            bottomBtn.style.display = "inline-block";
+          }
+
+          topBtn.onclick = () => window.open(product.url, "_blank");
+
+          if (!noProducts.includes(product.name)) {
+            bottomBtn.onclick = () => window.open(product.url, "_blank");
+          }
+        }
+
+        // Product Gallery
+        const gallery = document.getElementById("productGallery");
+        if (noProducts.includes(product.name)) {
+          gallery.style.display = "none";
+        }
+
+        gallery.innerHTML = "";
+
+        // Reset layout
+        gallery.classList.remove(
+          "vizrt-gallery",
+          "ndi-gallery",
+          "kiloview-gallery",
+          "sns-gallery",
+          "stepout-gallery",
+          "sponix-gallery",
+          "joy-gallery",
+        );
+
+        // Vizrt layout
+        if (product.name === "Vizrt") {
+          gallery.classList.add("vizrt-gallery");
+        }
+        // Kiloview layout
+        if (product.name === "Kiloview") {
+          gallery.classList.add("kiloview-gallery");
+        }
+
+        // NDI layout
+        if (product.name === "NDI") {
+          gallery.classList.add("ndi-gallery");
+        }
+        // Magewell Layout
+
+        if (product.name === "Magewell") {
+          gallery.innerHTML = `
+
+<div class="magewell-section glass">
+
+<h2>Pro Convert</h2>
+
+
+<div class="magewell-wrapper">
+
+<button class="slide-btn left">
+⮜
+</button>
+
+
+<div class="magewell-slider" id="mageSlider"></div>
+
+
+<button class="slide-btn right">
+⮞
+</button>
+
+</div>
+
+</div>
+
+
+
+<div class="director-section glass">
+
+<div class="product-item director-box">
+
+<img src="${product.products[1].image}">
+
+<h3>
+${product.products[1].name}
+</h3>
+
+</div>
+
+</div>
+
+`;
+
+          const slider = document.getElementById("mageSlider");
+
+          product.products[0].subProducts.forEach((item) => {
+            slider.innerHTML += `
+
+<div class="product-item glass">
+
+<img src="${item.image}">
+
+<h3>${item.name}</h3>
+
+</div>
+
+`;
+          });
+
+          document.querySelector(".left").onclick = () => {
+            slider.scrollLeft -= 320;
+          };
+
+          document.querySelector(".right").onclick = () => {
+            slider.scrollLeft += 320;
+          };
+
+          return;
+        }
+        // SNS Layout
+
+        if (product.name === "SNS") {
+          gallery.classList.add("sns-gallery");
+          gallery.innerHTML = `
+
+
+<div class="sns-section glass">
+
+<h2>EVO Shared Storage</h2>
+
+
+<div class="sns-wrapper">
+
+<button class="sns-btn left">
+⮜
+</button>
+
+
+<div class="sns-slider" id="snsSlider"></div>
+
+
+<button class="sns-btn right">
+⮞
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<div class="sns-director glass">
+
+<h2>EVO Suite</h2>
+
+<div class="product-item sns-main-product">
+
+<img src="${product.products[1].image}">
+
+<h3>
+${product.products[1].name}
+</h3>
+
+</div>
+
+</div>
+
+
+`;
+
+          const slider = document.getElementById("snsSlider");
+
+          product.products[0].subProducts.forEach((item) => {
+            slider.innerHTML += `
+
+<div class="product-item glass">
+
+
+<img src="${item.image}">
+
+
+<h3>${item.name}</h3>
+
+
+</div>
+
+`;
+          });
+
+          document.querySelector(".sns-btn.left").onclick = () => {
+            slider.scrollLeft -= 320;
+          };
+
+          document.querySelector(".sns-btn.right").onclick = () => {
+            slider.scrollLeft += 320;
+          };
+
+          return;
+        }
+        // SPONIXTECH VIDEO LAYOUT
+
+        if (product.name === "SponixTech") {
+          gallery.classList.add("sponix-gallery");
+          gallery.innerHTML = `
+
+<div class="sponix-gallery">
+
+${product.videos
+  .map(
+    (item) => `
+
+<div class="sponix-video-card glass">
+
+<video controls>
+
+<source src="${item.video}" type="video/mp4">
+
+</video>
+
+<h3>
+${item.name}
+</h3>
+
+</div>
+
+`,
+  )
+  .join("")}
+
+</div>
+
+`;
+
+          return;
+        }
+
+        // STEP OUT Layout
+
+        if (product.name === "Step Out") {
+          gallery.classList.add("stepout-gallery");
+
+          gallery.innerHTML = `
+
+<div class="stepout-product glass">
+
+<h2>AI Football Analysis</h2>
+
+<div class="stepout-images" id="stepoutImages"></div>
+
+</div>
+
+`;
+
+          const stepImages = document.getElementById("stepoutImages");
+
+          product.products.forEach((item) => {
+            stepImages.innerHTML += `
+
+    <div class="product-item glass">
+
+      <img src="${item.image}" alt="${item.name}">
+
+      <h3>${item.name}</h3>
+
+    </div>
+
+    `;
+          });
+
+          return;
+        }
+        // JOYMECHANIX Layout
+
+        if (product.name === "Joymechanix") {
+          gallery.className = "joy-gallery";
+
+          gallery.innerHTML = `
+
+${product.products
+  .slice(0, 3)
+  .map(
+    (item) => `
+<div class="joy-card glass">
+  <img src="${item.image}" alt="${item.name}">
+  <h3>${item.name}</h3>
+</div>
+`,
+  )
+  .join("")}
+
+<div class="joy-video glass">
+  <video controls>
+    <source src="${product.products[3].video}" type="video/mp4">
+  </video>
+
+  <h3>${product.products[3].name}</h3>
+</div>
+
+`;
+
+          return;
+        }
+        // NDI Video Layout
+
+        if (product.video) {
+          gallery.innerHTML = `
+
+<div class="ndi-video-box glass">
+
+<iframe
+src="https://www.youtube.com/embed/${product.video}"
+title="NDI Video"
+allowfullscreen>
+</iframe>
+
+</div>
+
+`;
+
+          return;
+        }
+        if (product.products && product.products.length) {
+          product.products.forEach((item) => {
+            gallery.innerHTML += `
+      <div class="product-item glass">
+        <img src="${item.image}" alt="${item.name}">
+        <h3>${item.name}</h3>
+      </div>
+    `;
+          });
+        } else {
+          gallery.innerHTML = "";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARIWA | Products</title>
+    <meta name="description" content="Explore ARIWA's broadcast and AI product ecosystem — Chyron, wTVision, Vizrt, NDI, Kiloview, Magewell and more." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ARIWA | Products" />
+    <meta property="og:description" content="Explore ARIWA's broadcast and AI product ecosystem." />
+    <meta property="og:image" content="assets/ariwa.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="navbar glass">
+      <a href="index.html" class="logo"
+        ><img src="assets/ariwa.png" alt="ARIWA"
+      /></a>
+
+      <input type="checkbox" id="navToggle" class="nav-toggle" />
+      <label for="navToggle" class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="products.html" class="active">Products</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section class="page-hero">
+        <h1>Products & Ecosystem</h1>
+        <p>Broadcast • IP • AI Technology</p>
+      </section>
+
+      <section class="filter">
+        <button class="active" onclick="filterProducts('all', event)">
+          All
+        </button>
+        <button onclick="filterProducts('broadcast', event)">Broadcast</button>
+        <button onclick="filterProducts('ip', event)">IP Video</button>
+        <button onclick="filterProducts('ai', event)">AI</button>
+      </section>
+
+      <section class="products-grid" id="productGrid"></section>
+    </main>
+
+    <footer class="footer">© 2026 ARIWA</footer>
+
+    <script src="products.js"></script>
+
+    <script>
+      function renderProducts(type = "all") {
+        const grid = document.getElementById("productGrid");
+        grid.innerHTML = "";
+
+        const list =
+          type === "all" ? products : products.filter((p) => p.type === type);
+
+        list.forEach((p, i) => {
+          const card = document.createElement("div");
+          card.className = "product-card glass";
+
+          card.innerHTML = `
+            <img src="${p.logo}" alt="${p.name}" class="product-logo" loading="lazy" />
+          `;
+
+          card.onclick = () => {
+            // Encode the name so it matches how product-detail.html decodes it
+            window.location.href = `product-detail.html?name=${encodeURIComponent(p.name)}`;
+          };
+
+          grid.appendChild(card);
+
+          // Staggered fade-in so filtering feels smooth instead of an abrupt jump
+          setTimeout(() => card.classList.add("show"), i * 40);
+        });
+      }
+
+      function filterProducts(type, evt) {
+        renderProducts(type);
+
+        // Keep the active filter button visually highlighted
+        document
+          .querySelectorAll(".filter button")
+          .forEach((btn) => btn.classList.remove("active"));
+
+        if (evt && evt.target) {
+          evt.target.classList.add("active");
+        }
+      }
+
+      renderProducts();
+
+      // Lock the grid's height to its tallest state (the "All" filter) so
+      // switching to a category with fewer items doesn't shrink the page
+      // and make the footer jump up. Only do this on wider screens: on
+      // mobile the grid is a single column, so locking to the "All" height
+      // leaves a huge empty gap below a filtered category instead.
+      window.addEventListener("load", () => {
+        const grid = document.getElementById("productGrid");
+        if (window.matchMedia("(min-width: 641px)").matches) {
+          grid.style.minHeight = `${grid.offsetHeight}px`;
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARIWA | Global Broadcast Ecosystem</title>
+    <meta name="description" content="ARIWA — global broadcast & AI ecosystem. Production infrastructure, hardware and software solutions for media, sports and IP workflows." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ARIWA | Global Broadcast Ecosystem" />
+    <meta property="og:description" content="Global production infrastructure for media, sports and IP workflow." />
+    <meta property="og:image" content="assets/ariwa.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header class="navbar glass">
+      <a href="index.html" class="logo"
+        ><img src="assets/ariwa.png" alt="ARIWA"
+      /></a>
+
+      <input type="checkbox" id="navToggle" class="nav-toggle" />
+      <label for="navToggle" class="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </label>
+
+      <nav class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="products.html">Products</a>
+        <a href="solutions.html">Solutions</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section class="hero">
+        <h1>Broadcast & AI Ecosystem</h1>
+        <p>Global production infrastructure for media, sports & IP workflow</p>
+
+        <button class="btn" onclick="window.location.href = 'products.html'">
+          View Products
+        </button>
+      </section>
+
+      <section class="brands">
+        <h2>Products & Brands</h2>
+
+        <div class="slider-container">
+          <div class="slider-track" id="brandTrack"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">© 2026 ARIWA</footer>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
