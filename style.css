@@ -1286,22 +1286,11 @@ body {
 
   /* The slide arrows were positioned at -120px, which pushes them off the
      viewport entirely on mobile and makes the sliders un-navigable by touch.
-     Pull them back inside the wrapper as small overlay buttons instead. */
+     The sliders below are already swipeable by finger on mobile, so the
+     arrow buttons are hidden entirely instead of repositioned. */
   .slide-btn,
   .sns-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
-  }
-
-  .slide-btn.left,
-  .sns-btn.left {
-    left: 4px;
-  }
-
-  .slide-btn.right,
-  .sns-btn.right {
-    right: 4px;
+    display: none;
   }
 
   .magewell-slider,
