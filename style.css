@@ -258,6 +258,9 @@ body {
   box-shadow: var(--glow);
   transform: translateY(-1px);
 }
+.btn-hidden {
+  display: none;
+}
 
 /* ===============================
    PAGE HERO (secondary pages: Products, Solutions)
@@ -668,11 +671,6 @@ body {
   transform: scale(1.05);
 }
 
-.brand-logo:hover {
-  filter: none;
-  transform: scale(1.05);
-}
-
 /* Brand Description */
 .brand-desc {
   max-width: 700px;
@@ -833,7 +831,7 @@ body {
 
 .magewell-section {
   padding: 35px;
-  width: 100%;
+  width: min(1200px, calc(100vw - 190px)); /* เปลี่ยนจาก width: 100%; */
   max-width: 1200px;
   margin: 0 auto 40px;
 }
@@ -955,7 +953,7 @@ body {
 /* ---------- Storage Slider ---------- */
 
 .sns-section {
-  width: 100%;
+  width: min(1200px, calc(100vw - 190px)); /* เปลี่ยนจาก width: 100%; */
   max-width: 1200px;
   margin: 0 auto 40px;
   padding: 35px;
